@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZXY TEAM - Professional VVIP</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --glow-blue: #00ccff;
+            --main-blue: #0088ff;
+            --dark-blue: #004488;
+            --bg-dark: #02050a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at top, #001a33 0%, var(--bg-dark) 100%);
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            display: flex; justify-content: center; min-height: 100vh;
+        }
+
+        .container { width: 100%; max-width: 450px; padding: 20px; text-align: center; }
+        .page { display: none; width: 100%; }
+        .active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .top-banner {
+            background: linear-gradient(90deg, #003366, var(--glow-blue));
+            padding: 10px; font-size: 10px; font-weight: bold; border-radius: 8px; margin-bottom: 30px;
+            text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .glow-text { font-family: 'Orbitron', sans-serif; font-size: 2.2rem; text-shadow: 0 0 15px rgba(0, 204, 255, 0.6); margin-top: 10px; }
+        .blue-text { font-family: 'Orbitron', sans-serif; color: var(--glow-blue); font-size: 1.4rem; }
+        .subtitle { font-size: 11px; color: #6688aa; margin-bottom: 35px; letter-spacing: 1px; }
+
+        .card {
+            background: rgba(10, 20, 35, 0.8);
+            border: 1px solid #004466;
+            border-radius: 20px; padding: 25px; margin-bottom: 20px; text-align: left;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .card h3 { font-size: 15px; color: var(--glow-blue); margin-bottom: 12px; font-family: 'Orbitron', sans-serif; display: flex; align-items: center; gap: 10px; }
+        .card p { font-size: 13px; color: #a0b0c0; margin-bottom: 20px; line-height: 1.5; }
+
+        .btn-blue {
+            display: block; width: 100%; border: none;
+            background: linear-gradient(to right, var(--dark-blue), var(--main-blue));
+            color: white; padding: 15px; border-radius: 12px;
+            font-weight: bold; font-size: 14px; text-align: center; cursor: pointer; text-decoration: none;
+            box-shadow: 0 0 15px rgba(0, 136, 255, 0.3);
+        }
+
+        .wrapper {
+            background: #000; border: 2px solid var(--glow-blue);
+            border-radius: 25px; padding: 35px 20px; position: relative; margin-top: 20px;
+        }
+        .back-btn { position: absolute; top: 15px; right: 20px; color: var(--glow-blue); font-size: 28px; cursor: pointer; }
+
+        .btn-gacor {
+            background: #05101a; border: 2px solid var(--glow-blue); color: #fff;
+            padding: 22px; border-radius: 15px; font-weight: 800; font-size: 18px;
+            text-transform: uppercase; cursor: pointer; font-family: 'Orbitron', sans-serif;
+            width: 100%; margin: 20px 0; box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+        }
+        @keyframes fireBreath {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px orange); }
+            50% { transform: scale(1.3); filter: drop-shadow(0 0 12px red); }
+        }
+        .moving-fire { display: inline-block; animation: fireBreath 0.7s infinite; margin-left: 5px; }
+
+        .label-select { display: block; text-align: left; font-size: 11px; color: var(--glow-blue); font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
+        .custom-select, .pay-input {
+            width: 100%; padding: 16px; background: #0a0a0a; border: 1px solid #333; color: #fff;
+            border-radius: 12px; font-size: 14px; margin-bottom: 20px;
+        }
+
+        .guarantee-box { 
+            border: 2px dashed var(--glow-blue); padding: 25px; border-radius: 25px; margin-top: 20px; 
+            background: rgba(0, 204, 255, 0.05); text-align: center; margin-bottom: 30px;
+        }
+
+        .qr-box { background: #fff; padding: 10px; border-radius: 15px; margin: 20px auto; width: 220px; height: 220px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .qr-box img { width: 100%; height: 100%; object-fit: contain; }
+
+        .main-footer { margin-top: 50px; padding-bottom: 40px; font-size: 10px; color: #445566; line-height: 2; }
+        .log-item { background: #111; border: 1px solid #333; padding: 12px; border-radius: 12px; margin-bottom: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="home-page" class="page active">
+            <div class="top-banner">🚀 SYSTEM UPDATE: VVIP FILES CYBER EDITION READY!</div>
+            <header style="margin-bottom: 30px;">
+                <h1 class="glow-text">ZXY TEAM</h1>
+                <h2 class="blue-text">CYBER VVIP</h2>
+                <p class="subtitle">NON-ROOT & ROOT & NO VIRTUAL</p>
+            </header>
+            <div class="card">
+                <h3>💎 PREMIUM ACCESS</h3>
+                <p>Dapatkan akses ke file modifikasi terbaik dengan keamanan tingkat tinggi dan fitur paling mutakhir.</p>
+                <button class="btn-blue" onclick="showPage('category-page')">DAFTAR HARGA FILE</button>
+            </div>
+            <div class="card">
+                <h3>🛡️ SUPPORT CENTER</h3>
+                <p>Layanan bantuan 10.00 - 20.00 jika Anda mengalami kendala pada produk kami.</p>
+                <a href="https://wa.me/628816945598" class="btn-blue" target="_blank">CHAT ADMIN</a>
+            </div>
+            <div class="card">
+                <h3>📢 COMMUNITY</h3>
+                <p>Bergabung dengan ribuan member lainnya di saluran resmi WhatsApp.</p>
+                <a href="https://whatsapp.com/channel/0029VbC8xAn7YScxzn5gTe0S" class="btn-blue" target="_blank">MASUK SALURAN</a>
+            </div>
+            <div class="guarantee-box">
+                <h4 class="blue-text" style="font-size: 14px; margin-bottom: 10px;">JAMINAN AMANAH & GARANSI</h4>
+                <p style="font-size: 12px; color: #a0b0c0;">Membeli file di <strong>ZXY TEAM</strong> akan diajari cara pemasangan sampai <strong>DONE (Berhasil)</strong>. Jika tidak bekerja, kami berikan jaminan <strong>FULL REFUND!</strong></p>
+            </div>
+            <footer class="main-footer">
+                <p id="secret-trigger" style="user-select: none; -webkit-user-select: none;">© 2026 ZXY TEAM VVIP</p>
+            </footer>
+        </div>
+
+        <div id="category-page" class="page">
+            <div class="wrapper">
+                <span class="back-btn" onclick="showPage('home-page')">&times;</span>
+                <h2 class="blue-text" style="margin-bottom: 25px;">KATEGORI PRODUK</h2>
+                <button class="btn-gacor" onclick="showPage('checkout-page')">FILE FF GACOR <span class="moving-fire">🔥</span></button>
+                <button class="btn-blue" style="background: white; color: black; font-weight: 800;" onclick="showPage('home-page')">INFORMASI ZXY TEAM</button>
+            </div>
+        </div>
+
+        <div id="checkout-page" class="page">
+            <div class="wrapper">
+                <span class="back-btn" onclick="showPage('category-page')">&times;</span>
+                <h3 class="blue-text" style="text-align: left; margin-bottom: 10px;">🛒 CHECKOUT FILE</h3>
+                <label class="label-select">LIST MENU UNGGULAN:</label>
+                <select class="custom-select" id="product-select" onchange="updatePrice()">
+                    <option value="0" disabled selected>-- KLIK UNTUK MEMILIH --</option>
+                    <optgroup label="EASY DRAG">
+                        <option value="10000">EASY DRAG XYZ 65% - Rp 10.000</option>
+                        <option value="15000">EASY DRAG XYZ 75% - Rp 15.000</option>
+                        <option value="20000">EASY DRAG XYZ 85% - Rp 20.000</option>
+                    </optgroup>
+                    <optgroup label="DADA HS">
+                        <option value="30000">DADA HS - Rp 30.000</option>
+                    </optgroup>
+                    <optgroup label="BODY LOCK">
+                        <option value="15000">BODYLOCK 80% - Rp 15.000</option>
+                        <option value="50000">BODYLOCK 100% - Rp 50.000</option>
+                    </optgroup>
+                </select>
+                <div style="border: 1px dashed var(--glow-blue); padding: 25px; border-radius: 15px; margin-bottom: 25px; background: rgba(0, 204, 255, 0.05);">
+                    <p style="font-size: 32px; font-weight: bold;" id="display-price">Rp 0</p>
+                </div>
+                <button class="btn-blue" onclick="goToPayment()">🚀 ORDER SEKARANG</button>
+            </div>
+        </div>
+
+        <div id="payment-page" class="page">
+            <div class="wrapper">
+                <span class="back-btn" onclick="showPage('checkout-page')">&times;</span>
+                <h2 class="blue-text">ZXY SECURE PAY</h2>
+                <div style="background: rgba(0, 26, 51, 0.5); border: 1px solid var(--dark-blue); border-radius: 15px; padding: 20px; margin-bottom: 25px;">
+                    <p style="font-size: 32px; font-weight: bold; color: var(--glow-blue);" id="pay-total">Rp 0</p>
+                </div>
+                <div class="qr-box">
+                    <img src="qr.jpg" alt="QR Payment Scan">
+                </div>
+                <div style="text-align: left; margin-bottom: 20px;">
+                    <label class="label-select">NOMOR WHATSAPP AKTIF</label>
+                    <input type="number" class="pay-input" id="user-phone" placeholder="Contoh: 08123456789">
+                    <label class="label-select">UPLOAD BUKTI TRANSFER</label>
+                    <input type="file" class="pay-input" id="proof-file">
+                </div>
+                <button class="btn-blue" onclick="confirmPayment()">KONFIRMASI PEMBAYARAN</button>
+            </div>
+        </div>
+
+        <div id="admin-page" class="page">
+            <div class="wrapper" style="border-color: gold;">
+                <span class="back-btn" onclick="showPage('home-page')">&times;</span>
+                <h2 style="color: gold; font-family: 'Orbitron'; margin-bottom: 20px;">OWNER PANEL</h2>
+                <div id="transaction-list" style="max-height: 400px; overflow-y: auto;"></div>
+                <button class="btn-blue" style="background: red; margin-top: 20px;" onclick="clearLogs()">RESET DATA</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedProduct = "";
+        let finalPrice = "";
+        
+        // Memastikan orderCounter selalu sinkron dengan memori browser
+        function getOrderCount() {
+            return parseInt(localStorage.getItem('orderCounter')) || 0;
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => { page.classList.remove('active'); });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function updatePrice() {
+            const select = document.getElementById('product-select');
+            finalPrice = select.value;
+            selectedProduct = select.options[select.selectedIndex].text.split(' - ')[0];
+            document.getElementById('display-price').innerText = "Rp " + parseInt(finalPrice).toLocaleString('id-ID');
+        }
+
+        function goToPayment() {
+            if(!finalPrice || finalPrice == "0") { alert("Pilih produk dulu!"); return; }
+            document.getElementById('pay-total').innerText = "Rp " + parseInt(finalPrice).toLocaleString('id-ID');
+            showPage('payment-page');
+        }
+
+        function confirmPayment() {
+            const phone = document.getElementById('user-phone').value;
+            const file = document.getElementById('proof-file').value;
+            if(!phone || !file) { alert("Lengkapi data pembayaran!"); return; }
+            
+            // Ambil nomor pesanan terakhir, lalu tambah 1
+            let currentCount = getOrderCount() + 1;
+            localStorage.setItem('orderCounter', currentCount);
+            
+            const orderID = "ZXY-#" + currentCount;
+            const priceFormatted = "Rp " + parseInt(finalPrice).toLocaleString('id-ID');
+
+            // Simpan ke Log Admin dengan ID Pesanan yang benar
+            saveTransaction(selectedProduct, priceFormatted, phone, orderID);
+
+            const waNumber = "628816945598"; 
+            const message = `*💳 KONFIRMASI PEMBAYARAN 💳*\n\n` +
+                            `*📦 ITEM : ${selectedProduct}*\n` +
+                            `*🆔 PESANAN : ${orderID}*\n` +
+                            `*💰 WAJIB ADA DI FOTO : ${priceFormatted}*\n` +
+                            `*📱 WA BUYYER : ${phone}*\n\n` +
+                            `*⚠️ TUGAS ADMIN : Cek Nominal Di Foto*`;
+
+            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function saveTransaction(item, price, phone, id) {
+            let logs = JSON.parse(localStorage.getItem('zxy_logs')) || [];
+            logs.push({
+                date: new Date().toLocaleString('id-ID'),
+                id: id,
+                item: item,
+                price: price,
+                phone: phone
+            });
+            localStorage.setItem('zxy_logs', JSON.stringify(logs));
+        }
+
+        function renderLogs() {
+            const list = document.getElementById('transaction-list');
+            let logs = JSON.parse(localStorage.getItem('zxy_logs')) || [];
+            if(logs.length === 0) {
+                list.innerHTML = `<p style="color:#6688aa;">Belum ada riwayat.</p>`;
+                return;
+            }
+            list.innerHTML = logs.map(log => `
+                <div class="log-item">
+                    <p style="font-size:10px; color:gold;">[${log.date}] - ${log.id}</p>
+                    <p style="font-weight:bold;">${log.item}</p>
+                    <p style="font-size:12px;">WA: ${log.phone} (${log.price})</p>
+                </div>
+            `).reverse().join('');
+        }
+
+        function clearLogs() {
+            if(confirm("Reset data transaksi dan nomor urut?")) {
+                localStorage.removeItem('zxy_logs');
+                localStorage.setItem('orderCounter', 0); // Reset nomor urut ke 0
+                renderLogs();
+            }
+        }
+
+        // LOGIKA RAHASIA (3.5 DETIK + 2 KLIK + PIN 314091)
+        let pressTimer;
+        let isReadyForClick = false;
+        const trigger = document.getElementById('secret-trigger');
+
+        const startPress = () => {
+            pressTimer = window.setTimeout(() => {
+                isReadyForClick = true;
+                alert("Owner Mode Aktif! Klik 2x cepat pada teks.");
+            }, 3500);
+        };
+        const endPress = () => clearTimeout(pressTimer);
+
+        trigger.addEventListener('mousedown', startPress);
+        trigger.addEventListener('touchstart', startPress);
+        trigger.addEventListener('mouseup', endPress);
+        trigger.addEventListener('touchend', endPress);
+
+        let clickCount = 0;
+        trigger.addEventListener('click', () => {
+            if (!isReadyForClick) return;
+            clickCount++;
+            if (clickCount === 2) {
+                const pin = prompt("MASUKKAN PIN OWNER:");
+                if (pin === "314091") {
+                    renderLogs();
+                    showPage('admin-page');
+                } else {
+                    alert("PIN SALAH!");
+                }
+                clickCount = 0;
+                isReadyForClick = false;
+            }
+        });
+    </script>
+</body>
+</html>

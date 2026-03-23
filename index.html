@@ -195,10 +195,12 @@
     <script>
         let selectedProduct = "";
         let finalPrice = "";
-        
-        // Memastikan orderCounter selalu sinkron dengan memori browser
-        function getOrderCount() {
-            return parseInt(localStorage.getItem('orderCounter')) || 0;
+
+        function generateOrderID() {
+            // Kombinasi 4 digit waktu + 6 digit acak = 10 Digit
+            const timestamp = Date.now().toString().slice(-4);
+            const randomPart = Math.floor(Math.random() * 900000 + 100000).toString();
+            return timestamp + randomPart;
         }
 
         function showPage(pageId) {
@@ -225,14 +227,9 @@
             const file = document.getElementById('proof-file').value;
             if(!phone || !file) { alert("Lengkapi data pembayaran!"); return; }
             
-            // Ambil nomor pesanan terakhir, lalu tambah 1
-            let currentCount = getOrderCount() + 1;
-            localStorage.setItem('orderCounter', currentCount);
-            
-            const orderID = "ZXY-#" + currentCount;
+            const orderID = generateOrderID();
             const priceFormatted = "Rp " + parseInt(finalPrice).toLocaleString('id-ID');
 
-            // Simpan ke Log Admin dengan ID Pesanan yang benar
             saveTransaction(selectedProduct, priceFormatted, phone, orderID);
 
             const waNumber = "628816945598"; 
@@ -267,7 +264,8 @@
             }
             list.innerHTML = logs.map(log => `
                 <div class="log-item">
-                    <p style="font-size:10px; color:gold;">[${log.date}] - ${log.id}</p>
+                    <p style="font-size:10px; color:gold;">[${log.date}]</p>
+                    <p style="font-weight:bold; color:var(--glow-blue);">ID: ${log.id}</p>
                     <p style="font-weight:bold;">${log.item}</p>
                     <p style="font-size:12px;">WA: ${log.phone} (${log.price})</p>
                 </div>
@@ -275,9 +273,8 @@
         }
 
         function clearLogs() {
-            if(confirm("Reset data transaksi dan nomor urut?")) {
+            if(confirm("Reset semua riwayat transaksi?")) {
                 localStorage.removeItem('zxy_logs');
-                localStorage.setItem('orderCounter', 0); // Reset nomor urut ke 0
                 renderLogs();
             }
         }
@@ -290,7 +287,7 @@
         const startPress = () => {
             pressTimer = window.setTimeout(() => {
                 isReadyForClick = true;
-                alert("Owner Mode Aktif! Klik 2x cepat pada teks.");
+                alert("Owner Mode Aktif! Klik 2x cepat pada teks copyright.");
             }, 3500);
         };
         const endPress = () => clearTimeout(pressTimer);

@@ -93,7 +93,7 @@
 
         .main-footer { margin-top: 50px; padding-bottom: 40px; font-size: 10px; color: #445566; line-height: 2; }
         
-        /* --- UPDATE OWNER PANEL: SESUAI GAMBAR CONTOH --- */
+        /* --- UPDATE OWNER PANEL: KECIL/SEDANG ANTI-SKROL --- */
         .log-item { 
             background: #111418; 
             border-radius: 15px; 
@@ -104,7 +104,9 @@
         }
         .proof-img { 
             width: 100%; 
-            height: auto; 
+            height: 200px; /* Ukuran sedeng agar pas satu layar */
+            object-fit: contain; 
+            background: #000;
             display: block; 
             border-bottom: 1px solid #2d333b;
         }

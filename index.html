@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZXY TEAM - Professional VVIP</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
     <style>
         :root {
@@ -89,7 +92,62 @@
         .qr-box img { width: 100%; height: 100%; object-fit: contain; }
 
         .main-footer { margin-top: 50px; padding-bottom: 40px; font-size: 10px; color: #445566; line-height: 2; }
-        .log-item { background: #111; border: 1px solid #333; padding: 12px; border-radius: 12px; margin-bottom: 10px; text-align: left; }
+        
+        /* --- UPDATE OWNER PANEL: SESUAI GAMBAR CONTOH --- */
+        .log-item { 
+            background: #111418; 
+            border-radius: 15px; 
+            margin-bottom: 30px; 
+            text-align: left; 
+            overflow: hidden; 
+            border: 1px solid #2d333b;
+        }
+        .proof-img { 
+            width: 100%; 
+            height: auto; 
+            display: block; 
+            border-bottom: 1px solid #2d333b;
+        }
+        .log-content { padding: 15px; }
+        .log-header-text { 
+            border-bottom: 1px solid #2d333b; 
+            padding-bottom: 10px; 
+            margin-bottom: 15px;
+            font-size: 13px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px;
+            letter-spacing: 1px;
+        }
+        .log-details { font-size: 12px; line-height: 1.8; margin-bottom: 15px; }
+        .log-details p { display: flex; align-items: center; gap: 8px; }
+        .admin-note { 
+            background: rgba(255, 204, 0, 0.1); 
+            border-top: 1px solid #2d333b; 
+            padding: 10px; 
+            color: #ffcc00; 
+            font-size: 12px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        .btn-chat-full { 
+            background: #25d366; 
+            color: white; 
+            padding: 12px; 
+            text-decoration: none; 
+            font-size: 14px; 
+            font-weight: bold; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px;
+            width: 100%;
+        }
+        .btn-chat-full i { font-size: 18px; }
     </style>
 </head>
 <body>
@@ -176,31 +234,36 @@
                     <label class="label-select">NOMOR WHATSAPP AKTIF</label>
                     <input type="number" class="pay-input" id="user-phone" placeholder="Contoh: 08123456789">
                     <label class="label-select">UPLOAD BUKTI TRANSFER</label>
-                    <input type="file" class="pay-input" id="proof-file">
+                    <input type="file" class="pay-input" id="proof-file" accept="image/*">
                 </div>
                 <button class="btn-blue" onclick="confirmPayment()">KONFIRMASI PEMBAYARAN</button>
             </div>
         </div>
 
         <div id="admin-page" class="page">
-            <div class="wrapper" style="border-color: gold;">
+            <div class="wrapper" style="border-color: gold; padding: 15px 10px;">
                 <span class="back-btn" onclick="showPage('home-page')">&times;</span>
-                <h2 style="color: gold; font-family: 'Orbitron'; margin-bottom: 20px;">OWNER PANEL</h2>
-                <div id="transaction-list" style="max-height: 400px; overflow-y: auto;"></div>
-                <button class="btn-blue" style="background: red; margin-top: 20px;" onclick="clearLogs()">RESET DATA</button>
+                <h2 style="color: gold; font-family: 'Orbitron'; font-size: 16px; margin-bottom: 15px;">OWNER PANEL</h2>
+                <div id="transaction-list" style="max-height: 75vh; overflow-y: auto;"></div>
+                <button class="btn-blue" style="background: red; margin-top: 15px; font-size: 12px; padding: 10px;" onclick="clearLogs()">RESET DATA</button>
             </div>
         </div>
     </div>
 
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBh-LYt3TAYPr32aKgeLOOrcDWwfKm3FyU",
+            databaseURL: "https://zxy-team-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "zxy-team",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         let selectedProduct = "";
         let finalPrice = "";
 
         function generateOrderID() {
-            // Kombinasi 4 digit waktu + 6 digit acak = 10 Digit
-            const timestamp = Date.now().toString().slice(-4);
-            const randomPart = Math.floor(Math.random() * 900000 + 100000).toString();
-            return timestamp + randomPart;
+            return "ZXY-" + Math.floor(1000000000 + Math.random() * 9000000000);
         }
 
         function showPage(pageId) {
@@ -224,62 +287,75 @@
 
         function confirmPayment() {
             const phone = document.getElementById('user-phone').value;
-            const file = document.getElementById('proof-file').value;
-            if(!phone || !file) { alert("Lengkapi data pembayaran!"); return; }
+            const fileInput = document.getElementById('proof-file');
+            
+            if(!phone || !fileInput.files[0]) { alert("Lengkapi data!"); return; }
             
             const orderID = generateOrderID();
             const priceFormatted = "Rp " + parseInt(finalPrice).toLocaleString('id-ID');
 
-            saveTransaction(selectedProduct, priceFormatted, phone, orderID);
-
-            const waNumber = "628816945598"; 
-            const message = `*💳 KONFIRMASI PEMBAYARAN 💳*\n\n` +
-                            `*📦 ITEM : ${selectedProduct}*\n` +
-                            `*🆔 PESANAN : ${orderID}*\n` +
-                            `*💰 WAJIB ADA DI FOTO : ${priceFormatted}*\n` +
-                            `*📱 WA BUYYER : ${phone}*\n\n` +
-                            `*⚠️ TUGAS ADMIN : Cek Nominal Di Foto*`;
-
-            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Image = e.target.result;
+                database.ref('transaksi/' + orderID).set({
+                    date: new Date().toLocaleString('id-ID'),
+                    id: orderID,
+                    item: selectedProduct,
+                    price: priceFormatted,
+                    phone: phone,
+                    proof: base64Image
+                }).then(() => {
+                    const waNumber = "628816945598"; 
+                    const message = `*MIN MAU KONFIRMASI PEMBAYARAN*\n` +
+                                    `*📦 ITEM : ${selectedProduct}*\n` +
+                                    `*🆔 PESANAN : ${orderID}*`;
+                    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(message)}`, '_blank');
+                }).catch((error) => {
+                    alert("Error Database: " + error.message);
+                });
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         }
 
-        function saveTransaction(item, price, phone, id) {
-            let logs = JSON.parse(localStorage.getItem('zxy_logs')) || [];
-            logs.push({
-                date: new Date().toLocaleString('id-ID'),
-                id: id,
-                item: item,
-                price: price,
-                phone: phone
-            });
-            localStorage.setItem('zxy_logs', JSON.stringify(logs));
-        }
-
-        function renderLogs() {
+        function listenToTransactions() {
             const list = document.getElementById('transaction-list');
-            let logs = JSON.parse(localStorage.getItem('zxy_logs')) || [];
-            if(logs.length === 0) {
-                list.innerHTML = `<p style="color:#6688aa;">Belum ada riwayat.</p>`;
-                return;
-            }
-            list.innerHTML = logs.map(log => `
-                <div class="log-item">
-                    <p style="font-size:10px; color:gold;">[${log.date}]</p>
-                    <p style="font-weight:bold; color:var(--glow-blue);">ID: ${log.id}</p>
-                    <p style="font-weight:bold;">${log.item}</p>
-                    <p style="font-size:12px;">WA: ${log.phone} (${log.price})</p>
-                </div>
-            `).reverse().join('');
+            database.ref('transaksi').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if(!data) {
+                    list.innerHTML = `<p style="color:#6688aa; margin: 20px 0; font-size:12px;">Belum ada riwayat.</p>`;
+                    return;
+                }
+                const keys = Object.keys(data).reverse();
+                list.innerHTML = keys.map(key => {
+                    const log = data[key];
+                    return `
+                        <div class="log-item">
+                            <img src="${log.proof}" class="proof-img" onclick="window.open(this.src)">
+                            <div class="log-content">
+                                <div class="log-header-text">💳 KONFIRMASI PEMBAYARAN 💳</div>
+                                <div class="log-details">
+                                    <p>📦 <b>ITEM :</b> ${log.item}</p>
+                                    <p>🆔 <b>REF :</b> ${log.id}</p>
+                                    <p>💰 <b>WAJIB ADA DI FOTO :</b> ${log.price}</p>
+                                    <p>📱 <b>WA BUYER :</b> ${log.phone}</p>
+                                </div>
+                            </div>
+                            <div class="admin-note">⚠️ TUGAS ADMIN: Cek nominal di foto.</div>
+                            <a href="https://wa.me/${log.phone.replace(/^0/, '62')}" class="btn-chat-full" target="_blank">
+                                ✅ Chat & Kirim File
+                            </a>
+                        </div>
+                    `;
+                }).join('');
+            });
         }
 
         function clearLogs() {
-            if(confirm("Reset semua riwayat transaksi?")) {
-                localStorage.removeItem('zxy_logs');
-                renderLogs();
+            if(confirm("Hapus semua data di database?")) {
+                database.ref('transaksi').remove();
             }
         }
 
-        // LOGIKA RAHASIA (3.5 DETIK + 2 KLIK + PIN 314091)
         let pressTimer;
         let isReadyForClick = false;
         const trigger = document.getElementById('secret-trigger');
@@ -287,7 +363,7 @@
         const startPress = () => {
             pressTimer = window.setTimeout(() => {
                 isReadyForClick = true;
-                alert("Owner Mode Aktif! Klik 2x cepat pada teks copyright.");
+                alert("Owner Mode Aktif!");
             }, 3500);
         };
         const endPress = () => clearTimeout(pressTimer);
@@ -304,7 +380,7 @@
             if (clickCount === 2) {
                 const pin = prompt("MASUKKAN PIN OWNER:");
                 if (pin === "314091") {
-                    renderLogs();
+                    listenToTransactions();
                     showPage('admin-page');
                 } else {
                     alert("PIN SALAH!");
